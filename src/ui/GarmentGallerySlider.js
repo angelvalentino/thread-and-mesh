@@ -37,7 +37,7 @@ export default class GarmentGallerySlider {
   }
 
   getTotalImages() {
-    return this.images.medium.length;
+    return this.images.length;
   }
 
   addSwipeEvents() {
@@ -140,7 +140,7 @@ export default class GarmentGallerySlider {
   }
 
   generateSliderImages() {
-    return this.images.medium.map(({ url, alt }, i) => (
+    return this.images.map(({ url, alt }, i) => (
       `
         <div 
           aria-roledescription="slide"
@@ -148,10 +148,11 @@ export default class GarmentGallerySlider {
           class="garment-gallery__photo-container blur-img-loader"
           aria-hidden="${this.imageIndex !== i}"
           id="garment-gallery__photo-container__item-${i + 1}" 
+          style="background-image: url(${url}-m-low-res.jpg)"
         >
           <img 
             class="garment-gallery__photo" 
-            src="${url}" 
+            src="${url}-m.jpg" 
             alt="${alt}, image ${i + 1} of ${this.getTotalImages()}"
           >
         </div>
@@ -160,16 +161,19 @@ export default class GarmentGallerySlider {
   }
 
   generateSliderNav() {
-    return this.images.small.map(({ url, alt }, i) => (
+    return this.images.map(({ url, alt }, i) => (
       `
-        <li role="presentation" class="garment-gallery__thumb-container blur-img-loader">
+        <li 
+          role="presentation" class="garment-gallery__thumb-container blur-img-loader"
+          style="background-image: url(${url}-s-low-res.jpg)"
+        >
           <img 
             role="tab"
             aria-selected="${i === this.imageIndex}"
             aria-controls="garment-gallery__photo-container__item-${i + 1}"
             aria-label="Show image ${i + 1}"
             class="garment-gallery__thumb" 
-            src="${url}" 
+            src="${url}-s.jpg" 
             alt="${alt}"
             data-index="${i}"
             tabindex="0"
