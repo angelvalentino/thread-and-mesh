@@ -4,17 +4,17 @@
 
 ## 📋 About
 
-[thread & mesh](https://taskflowapp.net/) is an interactive web based atelier built with Three.js where I present my hand sewn bespoke garments inside a navigable 3D environment. Built with WebGL and vanilla JavaScript, the experience is smooth, responsive, and designed to feel purposeful rather than decorative. 
+[thread & mesh](https://taskflowapp.net/) is an interactive web-based atelier built with Three.js where I present my hand sewn bespoke garments inside a navigable 3D environment. Built with WebGL and vanilla JavaScript, the experience is smooth, responsive, and designed to feel purposeful rather than decorative. 
 
 > Its primary goal is to convey the concept at first glance, showcasing my sewing, aesthetic, and engineering skills. Inspired by the hypothalamus’ exploratory system, it sparks curiosity and creates a memorable experience —what matters is not what the user sees, but what they feel.
 
-Accessibility is treated as a first class concern. Despite being a 3D experience, thread & mesh is fully keyboard navigable and carefully focus managed. Semantic HTML and ARIA practices are applied across all UI layers, including complex modal based interfaces.
+Accessibility is treated as a first-class concern. Despite being a 3D experience, thread & mesh is fully keyboard navigable with consistent focus management throughout. Semantic HTML and ARIA practices are applied across all UI layers, including complex modal based interfaces. 
 
-A key part of this is my custom [vanilla-aria-modal npm package](https://www.npmjs.com/package/vanilla-aria-modals), which handles modal stacking, focus trapping, escape behavior and keyboard navigation throughout the application. My idea is that no matter how experimental the medium may be, the experience should remain the same for everyone.
+A key part of this is my custom [vanilla-aria-modal npm package](https://www.npmjs.com/package/vanilla-aria-modals), which handles modal stacking, focus trapping, escape behavior and keyboard navigation throughout the application. My idea is that no matter how experimental the medium may be, the journey should remain the same for everyone.
 
 ### 🪡 Concept and Intent
 
-thread & mesh sits at the intersection of fashion, spatial design, and software engineering, communicating through experience rather than text. By moving through the site and interacting with garments, visitors form an understanding naturally. The project draws attention through exploration rather than instruction.
+thread & mesh sits at the intersection of fashion, design, and software engineering, communicating through experience rather than text. By moving through the site and interacting with garments, visitors form an understanding naturally. The project draws attention through exploration rather than instruction.
 
 The project is intentionally quiet and focused. There is no spectacle for its own sake. Every interaction prioritizes clarity and presence, mirroring the physical process of garment making where attention and material understanding matter more than speed or excess.
 
@@ -100,11 +100,7 @@ git clone https://github.com/angelvalentino/thread-and-mesh.git
 
 ## 🌱 Evolution, Features and Limitations
 
-As with anything in life, nothing can be perfect, but I gave my all to make this as polished as possible. While the application works well, it is still a 3D experience, which means ARIA support and accessibility are inherently limited, even if properly implemented. Performance is also constrained by the nature of real-time 3D rendering.
-
-The main alternatives would be either removing the 3D aspect entirely or creating a separate experience specifically for accessibility. Both options would compromise the core goal of providing a memorable, unified journey for all users and would add significant complexity and ongoing maintenance.  
-
-The same challenge applies to mobile compatibility. While the experience is technically accessible on mobile, it is designed for desktop; users need to tilt their device to view each scene optimally because the content is ultimately a wide panoramic view. A separate mobile experience, such as a simple slider of garments, would again compromise the goal of a unified, interactive atelier that communicates the concept at a glance.  
+While carefully polished, it remains a real time 3D environment, which introduces inherent limitations around accessibility, ARIA support, and performance despite best practices being applied. Optimized for desktop, with mobile support available but best experienced by tilting the device due to the panoramic nature of the scenes. Creating a separate mobile specific experience would undermine the goal of a single, unified atelier. 
 
 To optimize mobile performance, certain elements such as the wall lamp lighting were removed to maintain a smooth framerate of 30+ FPS on most devices. On smaller screens, these changes are barely noticeable, and the experience remains visually consistent. 
 
