@@ -658,6 +658,7 @@ main {
 .garment-gallery__thumb {
   border: 2px solid transparent;
   border-radius: 3px;
+  outline: none;  
 }
 
 .garment-gallery__thumb.remove-border {
@@ -665,6 +666,10 @@ main {
 }
 
 .garment-gallery__thumb.active {
+  border: 2px solid white;
+}
+
+.garment-gallery__thumb:focus {
   border: 2px solid white;
 }
 
