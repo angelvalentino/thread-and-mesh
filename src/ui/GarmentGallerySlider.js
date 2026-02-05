@@ -1,16 +1,19 @@
 import Utils from "../utils/Utils";
 
 export default class GarmentGallerySlider {
-  constructor(images) {
+  static imagesCache = {};
+
+  constructor(images, garmentKey) {
+    this.utils = new Utils;
+    this.garmentKey = garmentKey
     this.images = images;
     this.imageIndex = 0;
     this.eventHandler = {};
-    this.utils = new Utils;
 
     this.root = document.getElementById('garment-gallery');
-
     this.root.innerHTML = this.generateSlider();
-    this.utils.addProgressiveLoading(document.querySelectorAll('.blur-img-loader'))
+
+    this.addProgressiveLoading(document.querySelectorAll('.blur-img-loader'));
 
     this.lms = {
       imageSliderContainer: this.root.querySelector('.garment-gallery__photos-list'),
@@ -38,6 +41,64 @@ export default class GarmentGallerySlider {
 
   getTotalImages() {
     return this.images.length;
+  }
+
+  addProgressiveLoading(elements) {
+    let isNew = false;
+
+    if (!GarmentGallerySlider.imagesCache[this.garmentKey]) {
+      GarmentGallerySlider.imagesCache[this.garmentKey] = [];
+    }
+
+    // Check if we preloaded all images
+    // We multiply by 2 because we cache both the full-res ("m") and thumbnail ("s") images
+    if (GarmentGallerySlider.imagesCache[this.garmentKey].length < this.images.length * 2) {
+      isNew = true;
+    }
+
+    if (isNew === false) {
+      // Preloaded all images no loading management needed
+      return;
+    }
+
+    elements.forEach(imgContainerLm => {
+      // Select the thumbnail image within the container
+      const thumbnailImg = imgContainerLm.querySelector('img');
+
+      const loaded = () => {
+        imgContainerLm.classList.add('loaded');
+        thumbnailImg.ariaBusy = 'false';
+
+        // Delay to smoothly transition from low-res to full-res image
+        setTimeout(() => {
+          imgContainerLm.style.backgroundImage = 'none';
+          imgContainerLm.style.backgroundColor = 'transparent';
+        }, 250);
+
+        if (isNew) {
+          // Cache the image only if it’s not already in the list
+          if (!GarmentGallerySlider.imagesCache[this.garmentKey].some(cachedImg => cachedImg.src === thumbnailImg.src)) {
+            // Create a new Image reference to keep the file in memory
+            const img = new Image();
+            img.src = thumbnailImg.src;
+            GarmentGallerySlider.imagesCache[this.garmentKey].push(img);
+          } 
+        }
+      }
+      
+      // If the image is already fully loaded, run the handler immediately
+      if (thumbnailImg.complete) {
+        loaded();
+      } 
+      // Otherwise, add an event listener to handle the image load event
+      else {
+        // No need to keep a reference to the load event. When slides are switched, 
+        // the elements are re-rendered and garbage collected, so the event listener is automatically removed.
+        thumbnailImg.addEventListener('load', loaded);
+        // Mark the image as loading for accessibility
+        thumbnailImg.ariaBusy = 'true';
+      }
+    });
   }
 
   addSwipeEvents() {
@@ -140,15 +201,19 @@ export default class GarmentGallerySlider {
   }
 
   generateSliderImages() {
-    return this.images.map(({ url, alt }, i) => (
-      `
+    return this.images.map(({ url, alt }, i) => {
+      const isCached = GarmentGallerySlider.imagesCache[this.garmentKey]?.some(img => img.src.endsWith(`${url}-m.jpg`));
+      const styleAttr = isCached ? '' : `background-image: url(${url}-m-low-res.jpg);`;
+      const containerClass = `garment-gallery__photo-container${!isCached ? ' blur-img-loader' : ''}`;
+
+      return `
         <div 
           aria-roledescription="slide"
           role="tabpanel" 
-          class="garment-gallery__photo-container blur-img-loader"
+          class="${containerClass}"
           aria-hidden="${this.imageIndex !== i}"
           id="garment-gallery__photo-container__item-${i + 1}" 
-          style="background-image: url(${url}-m-low-res.jpg)"
+          style="${styleAttr}"
         >
           <img 
             class="garment-gallery__photo" 
@@ -157,15 +222,20 @@ export default class GarmentGallerySlider {
           >
         </div>
       `
-    )).join('');
+    }).join('');
   }
 
   generateSliderNav() {
-    return this.images.map(({ url, alt }, i) => (
-      `
+    return this.images.map(({ url, alt }, i) => {
+      const isCached = GarmentGallerySlider.imagesCache[this.garmentKey]?.some(img => img.src.endsWith(`${url}-s.jpg`));
+      const styleAttr = isCached ? '' : `background-image: url(${url}-s-low-res.jpg);`;
+      const containerClass = `garment-gallery__thumb-container${!isCached ? ' blur-img-loader' : ''}`;
+
+      return `
         <li 
-          role="presentation" class="garment-gallery__thumb-container blur-img-loader"
-          style="background-image: url(${url}-s-low-res.jpg)"
+          role="presentation" 
+          class="${containerClass}"
+          style="${styleAttr}"
         >
           <img 
             role="tab"
@@ -180,7 +250,7 @@ export default class GarmentGallerySlider {
           >
         </li>
       `
-    )).join('');
+    }).join('');
   }
 
   generateSlider() {

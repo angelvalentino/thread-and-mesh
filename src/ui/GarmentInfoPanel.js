@@ -102,7 +102,7 @@ export default class GarmentInfoPanel {
     
     // Re-generate slider
     this.garmentGallerySlider && this.garmentGallerySlider.dispose();
-    this.garmentGallerySlider = new GarmentGallerySlider(garmentData.images);
+    this.garmentGallerySlider = new GarmentGallerySlider(garmentData.images, garmentKey);
     
     this.updateGarmentInfo(garmentData); // Update additional information
     this.garmentManager.updateActive(garmentKey, saveHistory, focusOnActiveGarment); // Set active garment mesh
