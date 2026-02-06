@@ -6,7 +6,7 @@
 
 [thread & mesh](https://taskflowapp.net/) is an interactive web-based atelier built with Three.js where I present my hand sewn bespoke garments inside a navigable 3D environment. Built with WebGL and vanilla JavaScript, the experience is smooth, responsive, and designed to feel purposeful rather than decorative. 
 
-> Its primary goal is to convey the concept at first glance, showcasing my sewing, aesthetic, and engineering skills. Inspired by the hypothalamus’ exploratory system, it sparks curiosity and creates a memorable experience —what matters is not what the user sees, but what they feel.
+> Its primary goal is to convey the concept at first glance, showcasing my sewing, aesthetic, and engineering skills. Inspired by the exploratory system, it sparks curiosity and creates a memorable experience —what matters is not what the user sees, but what they feel.
 
 Accessibility is treated as a first-class concern. Despite being a 3D experience, thread & mesh is fully keyboard navigable with consistent focus management throughout. Semantic HTML and ARIA practices are applied across all UI layers, including complex modal based interfaces. 
 

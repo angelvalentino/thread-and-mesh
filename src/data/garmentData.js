@@ -105,7 +105,7 @@ const garmentData = {
       },
       {
         url: '/images/pleated-trousers-denim/bottom-hem',
-        alt: 'Bottom hem detail showing clean slip stich finish and denim weight'
+        alt: 'Bottom hem detail showing clean slip stitch finish and denim weight'
       }
     ]
   },
@@ -150,7 +150,7 @@ const garmentData = {
       },
       {
         url: '/images/pleated-trousers-wool/zipper-fly-open',
-        alt: 'Zipper fly open on wool trousers showing interior construction and japanese cotton pocket lining'
+        alt: 'Zipper fly open on wool trousers showing interior construction and Japanese cotton pocket lining'
       }
     ]
   }
