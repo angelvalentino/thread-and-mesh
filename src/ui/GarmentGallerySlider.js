@@ -27,7 +27,10 @@ export default class GarmentGallerySlider {
   
     setTimeout(() => {
       this.updateNavHeight();
+      // Ensures the nav is scrolled to the top; Firefox preserves scroll otherwise
+      this.lms.imageSliderNav.scrollTop = 0;  
     }, 20);
+    
     this.updateSliderNav();
 
     window.addEventListener('resize', this.eventHandler.updateNavHeight);
