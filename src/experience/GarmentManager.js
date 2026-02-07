@@ -69,9 +69,11 @@ export default class GarmentManager {
     this.allMeshes.forEach(mesh => {
       // Create button
       const btn = document.createElement('button');
-      btn.dataset.garmentKey = mesh.userData.garmentKey
+      btn.dataset.garmentKey = mesh.userData.garmentKey;
       btn.innerText = 'See details about ' + garmentData[mesh.userData.garmentKey].title;
-      btn.classList.add('aria-btn');
+      btn.classList.add('visually-hidden');
+      btn.setAttribute('aria-expanded', 'false'); // initially closed
+      btn.setAttribute('aria-controls', 'garment-info-panel');
 
       // Add button 
       this.focusableBtns.push(btn);
@@ -143,16 +145,33 @@ export default class GarmentManager {
     }
   }
 
+  showFocusableBtns() {
+    this.focusableBtns.forEach(btn => {
+      btn.classList.remove('hidden');
+    });
+  }
+
   hideFocusableBtns() {
     this.focusableBtns.forEach(btn => {
       btn.classList.add('hidden');
     });
   }
 
-  showFocusableBtns() {
+  setFocusableBtnsCollapsed() {
     this.focusableBtns.forEach(btn => {
-      btn.classList.remove('hidden');
+      btn.setAttribute('aria-expanded', 'false');
     });
+  }
+
+  setFocusableBtnsExpanded(mesh) {
+    this.focusableBtns.forEach(btn => {
+      const isActive = btn.dataset.garmentKey === mesh.userData.garmentKey;
+      btn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+    });
+  }
+
+  resetActionHubReturnBtn() {
+    this.garmentActionHub.resetReturnBtn();
   }
 
   restoreOppositeSide() {
@@ -177,7 +196,7 @@ export default class GarmentManager {
     this.renderer.unfreezeShadows();
 
     // Display action hub
-    this.garmentActionHub.display(garmentData[this.currentActiveGarment.userData.garmentKey].longDescription);
+    this.garmentActionHub.display(garmentData[this.currentActiveGarment.userData.garmentKey]);
 
     // Clone the active mannequin and focus camera
     this.cloneManager.cloneActiveGarment(this.getActiveGarment());
@@ -261,6 +280,9 @@ export default class GarmentManager {
       // Update garment information and set up a new active garment
       this.garmentInfoPanel = new GarmentInfoPanel(garmentData, this.currentActiveGarment.userData.garmentKey, this, this.modalHandler);
     }
+
+    // Update aria-expanded on buttons
+    this.setFocusableBtnsExpanded(mesh);
   }
 
   update(delta) {

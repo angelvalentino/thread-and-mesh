@@ -40,16 +40,20 @@ export default class GarmentSlider {
       nextBtn: this.root.querySelector('.garment-slider__next-btn'),
       slider: this.root,
       sliderControls: this.root.querySelector('.garment-slider__controls'),
-      garmentTitle: this.root.querySelector('.garment-slider__title')
+      controls: [...this.root.querySelectorAll('.garment-slider__control-btn')],
+      garmentTitle: this.root.querySelector('.garment-slider__title'),
+      garmentInfoPanel: document.getElementById('garment-info-panel')
     };
 
     this.eventHandler = {};
-    this.eventHandler.handleSliderCick = this.handleSliderCick.bind(this);
+    this.eventHandler.handleSliderClick = this.handleSliderClick.bind(this);
+    this.eventHandler.handleSliderKeyboard = this.handleSliderKeyboard.bind(this)
     this.eventHandler.setSlide = this.setSlide.bind(this);
 
-    this.lms.prevBtn.addEventListener('click', this.eventHandler.handleSliderCick);
-    this.lms.nextBtn.addEventListener('click', this.eventHandler.handleSliderCick)
+    this.lms.prevBtn.addEventListener('click', this.eventHandler.handleSliderClick);
+    this.lms.nextBtn.addEventListener('click', this.eventHandler.handleSliderClick)
     this.lms.sliderControls.addEventListener('click', this.eventHandler.setSlide);
+    this.lms.sliderControls.addEventListener('keydown', this.eventHandler.handleSliderKeyboard);
 
     this.updateSliderControls();
   }
@@ -64,16 +68,51 @@ export default class GarmentSlider {
   }
 
   dispose() {
-    this.lms.prevBtn.removeEventListener('click', this.eventHandler.handleSliderCick);
-    this.lms.nextBtn.removeEventListener('click', this.eventHandler.handleSliderCick)
+    this.lms.prevBtn.removeEventListener('click', this.eventHandler.handleSliderClick);
+    this.lms.nextBtn.removeEventListener('click', this.eventHandler.handleSliderClick)
     this.lms.sliderControls.removeEventListener('click', this.eventHandler.setSlide);
+    this.lms.sliderControls.removeEventListener('keydown', this.eventHandler.handleSliderKeyboard);
   }
 
   setGarmentInfoPanelInstance(garmentInfoPanel) {
     this.garmentInfoPanel = garmentInfoPanel;
   }
 
-  handleSliderCick(e) {
+  handleSliderKeyboard(e) {
+    const btn = e.target.closest('.garment-slider__control-btn');
+    if (!btn) return;
+
+    const currentIndex = Number(btn.dataset.index);
+    let nextIndex;
+
+    switch (e.key) {
+      case 'ArrowRight':
+        e.preventDefault();
+        nextIndex = currentIndex + 1 < this.garmentsTitles.length ? currentIndex + 1 : 0;
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        nextIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : this.garmentsTitles.length - 1;
+        break;
+      case 'Home':
+        e.preventDefault();
+        nextIndex = 0;
+        break;
+      case 'End':
+        e.preventDefault();
+        nextIndex = this.garmentsTitles.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    this.setSlide(null, nextIndex, this.garmentsTitles[nextIndex], true);
+
+    this.updateSliderControls();
+    this.lms.controls[nextIndex].focus();
+  }
+
+  handleSliderClick(e) {
     const btn = e.target.closest('.garment-slider__prev-btn, .garment-slider__next-btn');
     if (!btn) return; // clicked somewhere else
 
@@ -85,13 +124,20 @@ export default class GarmentSlider {
     }
   } 
 
-  setSlide(e) {
-    const controlBtn = e.target.closest('.garment-slider__control-btn')
-    if (controlBtn) {
+  setSlide(e, garmentIndex, garmentKey, isKeyboard = false) {
+    if (!isKeyboard) {
+      const controlBtn = e.target.closest('.garment-slider__control-btn');
+      if (!controlBtn) return;
+
       this.garmentIndex = Number(controlBtn.dataset.index);
       this.garmentKey = controlBtn.dataset.name;
-      this.garmentInfoPanel.updateGarment(this.garmentData[this.garmentKey], { garmentKey: this.garmentKey });
+    } 
+    else {
+      this.garmentIndex = garmentIndex;
+      this.garmentKey = garmentKey;
     }
+
+    this.garmentInfoPanel.updateGarment(this.garmentData[this.garmentKey], { garmentKey: this.garmentKey });
   }
 
   slide(direction) {
@@ -117,16 +163,33 @@ export default class GarmentSlider {
   updateSliderControls() {
     const controls = [...this.lms.sliderControls.querySelectorAll('button')];
     controls.forEach(control => {
-      // Highlight the active control button and update aria-selected attribute
-      if (Number(control.dataset.index) === this.garmentIndex) {
-        control.classList.add('active');
-        control.ariaSelected = true;
-      } 
-      else {
-        control.classList.remove('active');
-        control.ariaSelected = false;
+      const isActive = Number(control.dataset.index) === this.garmentIndex;
+
+      control.classList.toggle('active', isActive);
+      control.ariaSelected = isActive;
+      control.tabIndex = isActive ? 0 : -1;
+
+      if (isActive) {
+        this.lms.garmentInfoPanel.setAttribute('aria-labelledby', control.id);
       }
     });
+  }
+
+  updateArrowLabels() {
+    const total = this.garmentsTitles.length;
+    const prevIndex = this.garmentIndex === 0 ? total - 1 : this.garmentIndex - 1;
+    const nextIndex = this.garmentIndex === total - 1 ? 0 : this.garmentIndex + 1;
+    const prevName = this.kebabToSpaces(this.garmentsTitles[prevIndex]);
+    const nextName = this.kebabToSpaces(this.garmentsTitles[nextIndex]);
+
+    this.lms.prevBtn.setAttribute(
+      'aria-label',
+      `Go to previous garment: ${prevName} (garment ${prevIndex + 1} of ${total})`
+    );
+    this.lms.nextBtn.setAttribute(
+      'aria-label',
+      `Go to next garment: ${nextName} (garment ${nextIndex + 1} of ${total})`
+    );
   }
 
   generateControls() {
@@ -137,11 +200,14 @@ export default class GarmentSlider {
             role="tab"
             aria-selected="${i === this.garmentIndex}"
             aria-controls="garment-info-panel"
+            aria-label="Select ${this.kebabToSpaces(title)} (garment ${i + 1} of ${this.garmentsTitles.length})"
             data-index="${i}"
             data-name="${title}"
             class="garment-slider__control-btn"
+            id="garment-slider__control-btn-${i + 1}"
             title="${this.kebabToSpaces(title)}"
-            aria-label="See ${this.kebabToSpaces(title)}"
+            tabindex="${i === this.garmentIndex ? 0 : -1}"
+            draggable="false"
           >
             ${this.garmentSliderControlsSVGs[title]}
           </button>
@@ -157,7 +223,11 @@ export default class GarmentSlider {
         ${this.generateControls()}
       </ul>
       <div id="garment-slider" class="garment-slider"> 
-        <button aria-label="Go back to previous garment" class="garment-slider__prev-btn">
+        <button 
+          aria-label="Go back to previous garment" 
+          aria-controls="garment-info-panel"
+          class="garment-slider__prev-btn"
+        >
           <svg class="garment-slider__prev-btn-svg" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g fill="none" fill-rule="evenodd">
               <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
@@ -166,7 +236,11 @@ export default class GarmentSlider {
           </svg>
         </button>
         <h2 id="garment-title" class="garment-slider__title">${this.kebabToSpaces(this.garmentKey)}</h2>
-        <button aria-label="Sew next garment" class="garment-slider__next-btn">
+        <button 
+          aria-label="Sew next garment" 
+          aria-controls="garment-info-panel"
+          class="garment-slider__next-btn"
+        >
           <svg class="garment-slider__next-btn-svg" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g fill="none" fill-rule="evenodd">
               <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />

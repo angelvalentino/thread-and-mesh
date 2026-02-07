@@ -29,9 +29,9 @@ export default class GarmentActionHub {
     }
   }
 
-  display(longDescription) {
+  display(garmentInformation) {
     this.lms.infoBtn.classList.add('active');
-    this.lms.returnBtn.classList.add('active');
+    this.resetReturnBtn(true); // reset return button but still make it visible
     this.lms.helper.classList.add('active');
     this.updateHelperIcon();
     this.modalHandler.addFocus({
@@ -39,7 +39,7 @@ export default class GarmentActionHub {
       firstFocusableLm: this.lms.returnBtn
     });
     
-    this.garmentInfoMenu = new GarmentInfoMenu(this.menuHandler, longDescription);
+    this.garmentInfoMenu = new GarmentInfoMenu(this.menuHandler, garmentInformation);
 
     this.modalHandler.addA11yEvents({
       modalKey: 'cloneView',
@@ -48,9 +48,16 @@ export default class GarmentActionHub {
     });
   }
 
+  resetReturnBtn(show = false) {
+    this.lms.returnBtn.classList.remove('visually-hidden');
+    this.lms.returnBtn.classList.toggle('active', show);
+    this.lms.returnBtn.setAttribute('aria-expanded', 'false');
+  }
+
   hide() {
     this.lms.infoBtn.classList.remove('active');
-    this.lms.returnBtn.classList.remove('active');
+    this.lms.returnBtn.setAttribute('aria-expanded', 'true'); // Mark as expanded since it opened the garment info panel
+    this.lms.returnBtn.classList.add('visually-hidden'); // Visually hide it but not remove it from the accessibility tree
     this.lms.helper.classList.remove('active');
 
     this.garmentInfoMenu.dispose();

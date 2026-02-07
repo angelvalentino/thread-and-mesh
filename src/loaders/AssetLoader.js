@@ -61,7 +61,7 @@ export default class AssetLoader {
           setTimeout(() => {
             this.loadingOverlayLm.style.display = 'none';
             this.loadingOverlayLm.ariaBusy = 'false';
-          }, 3000);
+          }, 2000);
       }, 250);
     }, 500);
   }

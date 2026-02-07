@@ -11,6 +11,6 @@ export default class AppInfoMenu {
   }
 
   dispose() {
-    this.menuHandler.dispose(this.menuKey)
+    this.menuHandler.dispose(this.menuKey);
   }
 }

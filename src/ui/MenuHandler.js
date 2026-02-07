@@ -6,11 +6,14 @@ export default class MenuHandler {
   }
 
   update({
+    menuKey,
+    garmentInformation,
     toggleBtnId,
     menuLmId,
     closeBtnId,
     infoContainerId,
-    menuKey
+    ariaTitleId,
+    ariaDescriptionId
   }) {
     if (!this.menus[menuKey]) {
       this.menus[menuKey] = {
@@ -20,13 +23,20 @@ export default class MenuHandler {
       }
     }
 
+    if (garmentInformation) {
+      this.ariaTitle = garmentInformation.title;
+      this.description = garmentInformation.longDescription;
+    }
+
     const menu = this.menus[menuKey];
 
     menu.lms = {
       toggleBtn: document.getElementById(toggleBtnId),
       menuLm: document.getElementById(menuLmId),
       closeBtn: document.getElementById(closeBtnId),
-      infoContainer: document.getElementById(infoContainerId)
+      infoContainer: document.getElementById(infoContainerId),
+      ariaTitle: document.getElementById(ariaTitleId),
+      ariaDescription: document.getElementById(ariaDescriptionId)
     }
 
     menu.lms.toggleBtn.addEventListener('click', menu.open);
@@ -36,8 +46,13 @@ export default class MenuHandler {
     this.atelierExperienceInstance = atelierExperienceInstance;
   }
 
-  setDescription(description, menuKey) {
-    this.menus[menuKey].lms.infoContainer.innerHTML = description;
+  setDescription(menuKey) {
+    this.menus[menuKey].lms.infoContainer.innerHTML = this.description;
+  }
+
+  setAriaDescription(menuKey) {
+    this.menus[menuKey].lms.ariaTitle.innerText = 'Additional information for ' + this.ariaTitle.toLowerCase(),
+    this.menus[menuKey].lms.ariaDescription.innerText = 'View ' + this.ariaTitle.toLowerCase() + ' additional information, including why it was made and design choices.';
   }
 
   dispose(menuKey) {
@@ -56,7 +71,8 @@ export default class MenuHandler {
     const { toggleBtn, menuLm, closeBtn } = menu.lms;
 
     // close menu
-    toggleBtn.style.display = '';
+    toggleBtn.classList.remove('visually-hidden');
+    toggleBtn.setAttribute('aria-expanded', 'false');
     menuLm.classList.remove('active');
 
     menu.timIds.hideMenu = setTimeout(() => {
@@ -80,7 +96,8 @@ export default class MenuHandler {
     const { toggleBtn, menuLm, closeBtn } = menu.lms;
 
     // show menu
-    toggleBtn.style.display = 'none';
+    toggleBtn.classList.add('visually-hidden')
+    toggleBtn.setAttribute('aria-expanded', 'true');
     menuLm.style.display = 'block';
     this.modalHandler.addFocus({
       modalKey: menuKey, 

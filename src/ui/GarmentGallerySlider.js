@@ -16,9 +16,11 @@ export default class GarmentGallerySlider {
     this.addProgressiveLoading(document.querySelectorAll('.blur-img-loader'));
 
     this.lms = {
+      imageSlider: this.root,
       imageSliderContainer: this.root.querySelector('.garment-gallery__photos-list'),
       imageSliderNav: this.root.querySelector('.garment-gallery__nav'),
-      imageSlider: this.root
+      thumbs: [...this.root.querySelectorAll('.garment-gallery__thumb')],
+      images: [...this.root.querySelectorAll('.garment-gallery__photo-container')]
     };
 
     this.eventHandler.updateNavHeight = this.updateNavHeight.bind(this);
@@ -124,12 +126,37 @@ export default class GarmentGallerySlider {
   handleNavKeyboardA11y(e) {
     const thumb = e.target.closest('.garment-gallery__thumb');
     if (!thumb) return;
+   
+    const currentIndex = Number(thumb.dataset.index);
+    let nextIndex = null;
 
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault(); // prevent Space from scrolling
-      const index = Number(thumb.dataset.index);
-      this.setSlide(index);
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        nextIndex = currentIndex + 1 < this.lms.thumbs.length ? currentIndex + 1 : 0;
+        break;
+
+      case 'ArrowUp':
+        e.preventDefault();
+        nextIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : this.lms.thumbs.length - 1;
+        break;
+
+      case 'Home':
+        e.preventDefault();
+        nextIndex = 0;
+        break;
+
+      case 'End':
+        e.preventDefault();
+        nextIndex = this.lms.thumbs.length - 1;
+        break;
+
+      default:
+        return;
     }
+
+    this.setSlide(nextIndex);
+    this.lms.thumbs[nextIndex].focus();
   }
 
   handleNavClick(e) {
@@ -167,24 +194,19 @@ export default class GarmentGallerySlider {
   }
 
   updateSliderImage() {
-    const images = [...this.lms.imageSliderContainer.children]
-    images.forEach((img, i) => {
+    this.lms.images.forEach((img, i) => {
       img.style.transform = `translateX(${-100 * this.imageIndex}%)`;
       img.ariaHidden = i !== this.imageIndex;
     });
   }
 
   updateSliderNav() {
-    const thumbs = [...this.lms.imageSliderNav.querySelectorAll('img')]
-    thumbs.forEach(thumb => {
-      if (Number(thumb.dataset.index) === this.imageIndex) {
-        thumb.classList.add('active');
-        thumb.ariaSelected = true;
-      }
-      else {
-        thumb.classList.remove('active');
-        thumb.ariaSelected = false;
-      }
+    this.lms.thumbs.forEach(thumb => {
+      const isActive = Number(thumb.dataset.index) === this.imageIndex;
+      
+      thumb.classList.toggle('active', isActive);
+      thumb.ariaSelected = isActive;
+      thumb.tabIndex = isActive ? 0 : -1;
     });
   }
 
@@ -212,16 +234,17 @@ export default class GarmentGallerySlider {
       return `
         <div 
           aria-roledescription="slide"
+          aria-hidden="${this.imageIndex !== i}"
+          aria-labelledby="garment-gallery__thumb-${i + 1}"
           role="tabpanel" 
           class="${containerClass}"
-          aria-hidden="${this.imageIndex !== i}"
           id="garment-gallery__photo-container__item-${i + 1}" 
           style="${styleAttr}"
         >
           <img 
             class="garment-gallery__photo" 
             src="${url}-m.jpg" 
-            alt="${alt}, image ${i + 1} of ${this.getTotalImages()}"
+            alt="${alt} (image ${i + 1} of ${this.getTotalImages()})"
           >
         </div>
       `
@@ -244,12 +267,14 @@ export default class GarmentGallerySlider {
             role="tab"
             aria-selected="${i === this.imageIndex}"
             aria-controls="garment-gallery__photo-container__item-${i + 1}"
-            aria-label="Show image ${i + 1}"
+            aria-label="Thumbnail of: ${alt} (image ${i + 1} of ${this.getTotalImages()})"
+            id="garment-gallery__thumb-${i + 1}"
             class="garment-gallery__thumb" 
             src="${url}-s.jpg" 
-            alt="${alt}"
+            alt=""
             data-index="${i}"
-            tabindex="0"
+            tabindex="${i === this.imageIndex ? 0 : -1}"
+            draggable="false"
           >
         </li>
       `
@@ -262,7 +287,12 @@ export default class GarmentGallerySlider {
         <div class="garment-gallery__photos-list">
           ${this.generateSliderImages()}
         </div>
-        <ul role="tablist" class="garment-gallery__nav" style="max-height: 100px;">
+        <ul 
+          role="tablist" 
+          aria-orientation="vertical"
+          class="garment-gallery__nav" 
+          style="max-height: 100px;
+        ">
           ${this.generateSliderNav()}
         </ul>
       `

@@ -3,9 +3,6 @@ import GarmentSlider from "./GarmentSlider.js";
 
 export default class GarmentInfoPanel {
   constructor(garmentData, garmentKey, garmentManager, modalHandler, focusOnActiveGarment = true) {
-    this.viewMoreBtn = document.getElementById('view-more-btn');
-    this.returnBtn = document.getElementById('return-btn');
-    this.btnContainerLm = document.getElementById('btn-container');
     this.garmentManager = garmentManager;
     this.modalHandler = modalHandler;
 
@@ -34,7 +31,10 @@ export default class GarmentInfoPanel {
     this.eventHandler.enterCloneView = this.garmentManager.enterCloneView.bind(this.garmentManager);
 
     if (!this.lms.panel.classList.contains('active')) {
-      this.garmentManager.hideFocusableBtns();
+      // Show the focusable garment buttons in the accessibility tree if the panel was opened from the action hub
+      // So they are available again if we return to the initial scene and need focus
+      if (!openFromInitialScene) this.garmentManager.showFocusableBtns();
+
       this.lms.panel.classList.add('active');
 
       // If opened from the initial scene, we add and store focus.
@@ -66,9 +66,16 @@ export default class GarmentInfoPanel {
   close({ resetPanel = true, deleteActiveGarmentRef = true } = {}) {
     this.dispose({ hidePanel: true });
     this.garmentManager.resetActiveGarment({ resetCamera: resetPanel, deleteActiveGarmentRef });
-    // Restores focus and buttons only when closing the first panel, not when going to the interactive view.
-    if (resetPanel) this.garmentManager.showFocusableBtns();
-    if (resetPanel) this.modalHandler.restoreFocus({ modalKey: 'garmentInfoPanel' });
+    
+    this.garmentManager.setFocusableBtnsCollapsed(); // reset the focusable buttons expaned status
+    
+    // If we are not resetting the panel (closing to the action hub), hide the garment focusable buttons from the DOM
+    if (!resetPanel) this.garmentManager.hideFocusableBtns();
+
+    if (resetPanel) {
+      this.garmentManager.resetActionHubReturnBtn(); // Reset the return button from action hub: set aria-expanded to false and remove it from the DOM
+      this.modalHandler.restoreFocus({ modalKey: 'garmentInfoPanel' }); // Restore focus to where it was before the panel and action hub interactions
+    }
   }
 
   updateGarmentInfo({ title, description }) {
@@ -99,7 +106,8 @@ export default class GarmentInfoPanel {
     }
 
     this.garmentSlider.updateSliderControls();
-    
+    this.garmentSlider.updateArrowLabels();
+
     // Re-generate slider
     this.garmentGallerySlider && this.garmentGallerySlider.dispose();
     this.garmentGallerySlider = new GarmentGallerySlider(garmentData.images, garmentKey);
