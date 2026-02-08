@@ -8,7 +8,7 @@
 
 > Its primary goal is to convey the concept at first glance, showcasing my sewing, aesthetic, and engineering skills. Inspired by the exploratory system, it sparks curiosity and creates a memorable experience —what matters is not what the user sees, but what they feel.
 
-Accessibility is treated as a first-class concern. Despite being a 3D experience, thread & mesh is fully keyboard navigable with consistent focus management throughout. Semantic HTML and ARIA practices are applied across all UI layers, including complex modal based interfaces. 
+Accessibility is treated as a first-class concern following WAI-ARIA standards. Despite being a 3D experience, thread & mesh is fully keyboard navigable with consistent focus management throughout. Semantic HTML and ARIA practices are applied across all UI layers, including complex modal based interfaces. 
 
 A key part of this is my custom [vanilla-aria-modal npm package](https://www.npmjs.com/package/vanilla-aria-modals), which handles modal stacking, focus trapping, escape behavior and keyboard navigation throughout the application. My idea is that no matter how experimental the medium may be, the journey should remain the same for everyone.
 
@@ -42,7 +42,7 @@ The concept image that guided the design direction. The reference is from Modern
 - 🎨 **GSAP Animations:** Used selectively for smooth, controlled transitions and UI animations.  
 - 🧠 **Engagement-Driven Exploration:** Designed to draw user attention naturally, encouraging exploration leading to a memorable experience.
 - 📱 **Responsive Interface:** Fully responsive design that adapts seamlessly to desktops, tablets, mobiles, and smaller screens. 
-- 🌍 **Accessibility Focus:** Built with inclusivity in mind, emphasizing keyboard navigation, semantic HTML, and ARIA support to ensure the experience works for everyone.  
+- 🌍 **WAI-ARIA compliant:** Built with inclusivity in mind, emphasizing keyboard navigation, semantic HTML, and A11y support to ensure the experience works for everyone.  
 - ⚡ **Optimized Performance:** Built with Vite for fast development and optimized production builds, with all 3D models created in Blender, exported as GLTF, and compressed with Draco for smooth runtime performance on both older and modern devices, including proper loading UI and feedback for users. 
 - 🗂️ **vanilla-aria-modals Implementation:** The [modal handler](https://www.npmjs.com/package/vanilla-aria-modals) utility ensures consistent ARIA behavior, keyboard navigation, modal stacking, and focus management across menus and scenes. 
 - 🏗️ **Object-Oriented Architecture:** Modular, object-oriented design separates the core system, garment logic, UI and experience layers. Ensuring maintainability and scalability.
@@ -94,7 +94,7 @@ git clone https://github.com/angelvalentino/thread-and-mesh.git
 
 ## 📁 Further Documentation
 
-[Walkthrough Video]() – Short summary with visuals
+[Video summary](https://youtu.be/ARTt1j5-vpg) – Short summary with visuals
 
 <br>
 
