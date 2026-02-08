@@ -135,22 +135,18 @@ export default class GarmentGallerySlider {
         e.preventDefault();
         nextIndex = currentIndex + 1 < this.lms.thumbs.length ? currentIndex + 1 : 0;
         break;
-
       case 'ArrowUp':
         e.preventDefault();
         nextIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : this.lms.thumbs.length - 1;
         break;
-
       case 'Home':
         e.preventDefault();
         nextIndex = 0;
         break;
-
       case 'End':
         e.preventDefault();
         nextIndex = this.lms.thumbs.length - 1;
         break;
-
       default:
         return;
     }

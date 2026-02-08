@@ -49,9 +49,9 @@ export default class GarmentActionHub {
   }
 
   resetReturnBtn(show = false) {
+    this.lms.returnBtn.setAttribute('aria-expanded', 'false');
     this.lms.returnBtn.classList.remove('visually-hidden');
     this.lms.returnBtn.classList.toggle('active', show);
-    this.lms.returnBtn.setAttribute('aria-expanded', 'false');
   }
 
   hide() {

@@ -219,10 +219,10 @@ export default class GarmentSlider {
   generateSlider() {
     return (
       `
-      <ul role="tablist" class="garment-slider__controls">
+      <ul aria-orientation="horizontal" role="tablist" aria-label="Garment selection" class="garment-slider__controls">
         ${this.generateControls()}
       </ul>
-      <div id="garment-slider" class="garment-slider"> 
+      <div role="region" aria-roledescription="carousel" aria-label="Garment carousel selection" id="garment-slider" class="garment-slider"> 
         <button 
           aria-label="Go back to previous garment" 
           aria-controls="garment-info-panel"

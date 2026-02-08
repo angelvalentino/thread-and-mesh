@@ -7,7 +7,6 @@ export default class MenuHandler {
 
   update({
     menuKey,
-    garmentInformation,
     toggleBtnId,
     menuLmId,
     closeBtnId,
@@ -23,11 +22,6 @@ export default class MenuHandler {
       }
     }
 
-    if (garmentInformation) {
-      this.ariaTitle = garmentInformation.title;
-      this.description = garmentInformation.longDescription;
-    }
-
     const menu = this.menus[menuKey];
 
     menu.lms = {
@@ -40,19 +34,12 @@ export default class MenuHandler {
     }
 
     menu.lms.toggleBtn.addEventListener('click', menu.open);
+
+    return menu.lms; // return lms to be used in garment info menu specific logic
   }
 
   setAtelierExperienceInstance(atelierExperienceInstance) {
     this.atelierExperienceInstance = atelierExperienceInstance;
-  }
-
-  setDescription(menuKey) {
-    this.menus[menuKey].lms.infoContainer.innerHTML = this.description;
-  }
-
-  setAriaDescription(menuKey) {
-    this.menus[menuKey].lms.ariaTitle.innerText = 'Additional information for ' + this.ariaTitle.toLowerCase(),
-    this.menus[menuKey].lms.ariaDescription.innerText = 'View ' + this.ariaTitle.toLowerCase() + ' additional information, including why it was made and design choices.';
   }
 
   dispose(menuKey) {
