@@ -1,4 +1,4 @@
-import GarmentInfoMenu from "./GarmentInfoMenu";
+import GarmentMenu from "./GarmentMenu.js";
 
 export default class GarmentActionHub {
   constructor(garmentManager, modalHandler, utils, menuHandler) {
@@ -39,7 +39,7 @@ export default class GarmentActionHub {
       firstFocusableLm: this.lms.returnBtn
     });
     
-    this.garmentInfoMenu = new GarmentInfoMenu(this.menuHandler, garmentInformation);
+    this.garmentMenu = new GarmentMenu(this.menuHandler, garmentInformation);
 
     this.modalHandler.addA11yEvents({
       modalKey: 'cloneView',
@@ -60,8 +60,8 @@ export default class GarmentActionHub {
     this.lms.returnBtn.classList.add('visually-hidden'); // Visually hide it but not remove it from the accessibility tree
     this.lms.helper.classList.remove('active');
 
-    this.garmentInfoMenu.dispose();
-    this.garmentInfoMenu = null;
+    this.garmentMenu.dispose();
+    this.garmentMenu = null;
 
     this.modalHandler.restoreFocus({ modalKey: 'cloneView' });
 

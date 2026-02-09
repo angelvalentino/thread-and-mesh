@@ -1,6 +1,6 @@
-export default class GarmentInfoMenu {
+export default class GarmentMenu {
   constructor(menuHandler, garmentInformation) {
-    this.menuKey = 'garmentModal';
+    this.menuKey = 'garmentMenu';
     this.menuHandler = menuHandler;
     this.garmentInformation = garmentInformation;
    

@@ -1,13 +1,12 @@
 import * as THREE from 'three';
-import Utils from './Utils';
 
 export default class RaycasterControls {
-  constructor(camera, getTargets) {
+  constructor(camera, getTargets, utils) {
     this.camera = camera;
     this.getTargets = getTargets; // Function that returns the meshes to test
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
-    this.utils = new Utils;
+    this.utils = utils;
 
     this.lastHovered = null;
     this.enabled = true;

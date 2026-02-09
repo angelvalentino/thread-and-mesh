@@ -1,4 +1,4 @@
-import Utils from "../utils/Utils";
+import Utils from "../utils/Utils.js";
 
 export default class GarmentGallerySlider {
   static imagesCache = {};

@@ -14,6 +14,7 @@ import RoomGrid from '../experience/RoomGrid.js';
 import AppMenu from '../ui/AppMenu.js';
 import GarmentActionHub from '../ui/GarmentActionHub.js';
 import MenuHandler from '../ui/MenuHandler.js';
+import PointerControls from '../utils/PointerControls.js';
 
 export default class App {
   constructor(canvas) {
@@ -22,6 +23,8 @@ export default class App {
     const utils = new Utils;
 
     this.camera = new Camera(this.scene);
+    const pointerControls = new PointerControls(this.camera.instance, utils);
+    this.camera.setPointerControlsInstance(pointerControls);
     this.renderer = new Renderer(canvas, this.scene, this.camera.instance);
     this.lighting = new Lighting(this.scene);
     this.assetLoader = new AssetLoader(this.scene, this.camera.instance, utils);
@@ -41,7 +44,7 @@ export default class App {
     garmentManager.setCloneManagerInstance(cloneManager);
 
     // Experience
-    const raycasterControls = new RaycasterControls(this.camera.instance, () => garmentManager.getAllMeshes())
+    const raycasterControls = new RaycasterControls(this.camera.instance, () => garmentManager.getAllMeshes(), utils);
     this.camera.setRaycasterControlsInstance(raycasterControls);
     this.experience = new AtelierExperience(this.scene, this.camera.instance, garmentManager, raycasterControls, roomGrid);
     

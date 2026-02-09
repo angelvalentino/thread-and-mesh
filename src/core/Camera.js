@@ -1,6 +1,5 @@
 import gsap from 'gsap';
 import * as THREE from 'three';
-import PointerControls from '../utils/PointerControls';
 
 export default class Camera {
   constructor(scene) {
@@ -10,7 +9,6 @@ export default class Camera {
       0.1, 
       100
     );
-
 
     this.instance.position.set(0, 1.5, 4);
     scene.add(this.instance);
@@ -24,18 +22,21 @@ export default class Camera {
     this.history = [];
 
     this.pointerControlsStatus = true;
+    this.pointerControls = null;
+    this.raycasterControls = null;
+  }
 
-    this.pointerControls = new PointerControls(this.instance);
+  setPointerControlsInstance(pointerControls) {
+    this.pointerControls = pointerControls;
+  }
 
+  setRaycasterControlsInstance(raycasterControls) {
+    this.raycasterControls = raycasterControls;
   }
 
   onResize() {
     this.instance.aspect = window.innerWidth / window.innerHeight;
     this.instance.updateProjectionMatrix();
-  }
-
-  setRaycasterControlsInstance(raycasterControls) {
-    this.raycasterControls = raycasterControls;
   }
 
   pushCurrentStateToHistory() {
@@ -144,6 +145,6 @@ export default class Camera {
   }
 
   update() {
-    if (this.pointerControlsStatus) this.pointerControls.update()
+    if (this.pointerControlsStatus) this.pointerControls.update();
   }
 }

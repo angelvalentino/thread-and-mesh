@@ -1,10 +1,9 @@
 import * as THREE from 'three';
-import Utils from './Utils';
 
 export default class PointerControls {
-  constructor(camera) {
+  constructor(camera, utils) {
     this.camera = camera;
-    this.utils = new Utils;
+    this.utils = utils;
 
     this.maxOffset = { x: 0.1, y: 0.05 };
     this.eventHandler = {};
