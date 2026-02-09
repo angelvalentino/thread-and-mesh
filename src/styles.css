@@ -255,7 +255,7 @@ main {
   transform: translateY(-50%);
 }
 
-.slide-button.garment-info-panel__view-more-btn::after {
+.slide-button.garment-panel__view-more-btn::after {
   mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m3.97%2014.812l.65-.393a3%203%200%200%200%201.258-1.41l2.425-5.615a1.6%201.6%200%200%201%20.353-.51c.641-.615%201.75-.355%202.288.351c.994%201.303-.341%202.536-.059%203.623l7.754-4.355c1.804-.972%203.362%201.611%201.569%202.804l-4.59%202.55c.884%201.153%203.126%206.746.253%208.452a2.4%202.4%200%200%201-.526.217l-.35.109c-.901.28-2.606.634-3.774.532c-1.216-.106-1.978.542-2.918%201.082M14.647%204.72c-.397.397-2.125.283-2.763.203m2.763-.202c.398-.397.409-2.333.33-2.969m-.33%202.969C13.625%202.949%209.562.123%205.53%202.949C3.58%204.315%203.306%205.175%202.998%205.752%22%20%2F%3E%3C%2Fsvg%3E") no-repeat;
   -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m3.97%2014.812l.65-.393a3%203%200%200%200%201.258-1.41l2.425-5.615a1.6%201.6%200%200%201%20.353-.51c.641-.615%201.75-.355%202.288.351c.994%201.303-.341%202.536-.059%203.623l7.754-4.355c1.804-.972%203.362%201.611%201.569%202.804l-4.59%202.55c.884%201.153%203.126%206.746.253%208.452a2.4%202.4%200%200%201-.526.217l-.35.109c-.901.28-2.606.634-3.774.532c-1.216-.106-1.978.542-2.918%201.082M14.647%204.72c-.397.397-2.125.283-2.763.203m2.763-.202c.398-.397.409-2.333.33-2.969m-.33%202.969C13.625%202.949%209.562.123%205.53%202.949C3.58%204.315%203.306%205.175%202.998%205.752%22%20%2F%3E%3C%2Fsvg%3E") no-repeat;
 }
@@ -367,7 +367,7 @@ main {
 
 /* App menu */
 
-.info-menu,
+.app-menu,
 .garment-menu {
   pointer-events: auto;
   background-color: rgba(255, 255, 255, 0.97);
@@ -381,13 +381,13 @@ main {
   opacity: 0;
 }
 
-.info-menu.active,
+.app-menu.active,
 .garment-menu.active {
   transform: translateX(0);
   opacity: 1;
 }
 
-.info-menu__ui-limits,
+.app-menu__ui-limits,
 .garment-menu__ui-limits {
   margin: 0 auto;
   max-width: 1920px; 
@@ -403,7 +403,7 @@ main {
   padding: 20px;
 }
 
-.info-menu__close-btn,
+.app-menu__close-btn,
 .garment-menu__close-btn  {
   position: absolute;
   top: 27px;
@@ -412,51 +412,51 @@ main {
   line-height: 0;
 }
 
-.info-menu__close-icon,
+.app-menu__close-icon,
 .garment-menu__close-icon {
   width: 2rem;
   color: inherit;
 }
 
-.info-menu__desc {
+.app-menu__desc {
   max-width: 500px;
   font-size: 1.2em;
   line-height: 1.6;
 }
 
-.info-menu__social-links-list {
+.app-menu__social-links-list {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.info-menu__social-link {
+.app-menu__social-link {
   display: block;
   line-height: 0;
   transition: color var(--base-transition-duration);
 }
 
-.info-menu__social-link svg {
+.app-menu__social-link svg {
   width: 2.1em;
   color: inherit;
 }
 
-.info-menu__freecodecamp-icon {
+.app-menu__freecodecamp-icon {
   width: 2.4em !important;
 }
 
-.info-menu__github-icon {
+.app-menu__github-icon {
   width: 2.05em !important;
 }
 
-.info-menu__socials-container {
+.app-menu__socials-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 23px;
 }
 
-.info-menu__mailto-link {
+.app-menu__mailto-link {
   float: right;
   margin-top: 40px;
   font-size: 1.1em;
@@ -478,7 +478,7 @@ main {
 
 /* Garment info panel */
 
-.garment-info-panel {
+.garment-panel {
   pointer-events: auto;
   position: absolute;
   right: 0;
@@ -496,11 +496,11 @@ main {
   margin: 30px;
 }
 
-.garment-info-panel.active {
+.garment-panel.active {
   display: block;
 }
 
-.garment-info-panel__close-btn {
+.garment-panel__close-btn {
   position: absolute;
   top: 12px;
   right: 15px;
@@ -509,24 +509,24 @@ main {
   transition: opacity var(--base-transition-duration);
 }
 
-.garment-info-panel__close-btn-svg {
+.garment-panel__close-btn-svg {
   width: 1.15rem;
   display: block;
 }
 
-.garment-info-panel__title {
+.garment-panel__title {
   margin-bottom: 20px;
   font-size: 2.25rem;
   line-height: 1.25;
 }
 
-.garment-info-panel__description {
+.garment-panel__description {
   line-height: 1.4;
   margin-bottom: 30px;
   font-size: 1.125rem;
 }
 
-.garment-info-panel__view-more-btn {
+.garment-panel__view-more-btn {
   background-color: rgba(0, 0, 0, 0.5);
   padding: 12px 25px;
   border-radius: 3px;
@@ -807,11 +807,11 @@ main {
     transform: scale(1.1);
   }
 
-  .garment-info-panel__view-more-btn:is(:hover, :focus-visible) {
+  .garment-panel__view-more-btn:is(:hover, :focus-visible) {
     background-color: rgba(0, 0, 0, 0.72);
   }
 
-  .info-menu__social-link:is(:hover, :focus-visible) {
+  .app-menu__social-link:is(:hover, :focus-visible) {
     color: #9A8CFF;
   }
 
@@ -821,7 +821,7 @@ main {
     background-color: rgba(0, 0, 0, 0.72);
   }
 
-  .garment-info-panel__close-btn:is(:hover, :focus-visible) {
+  .garment-panel__close-btn:is(:hover, :focus-visible) {
     opacity: 1;
   }
 
@@ -834,12 +834,12 @@ main {
 
 /* Active */
 
-.info-menu__close-btn:active svg,
+.app-menu__close-btn:active svg,
 .garment-menu__close-btn:active svg {
   opacity: 0.7;
 }
 
-.info-menu__social-link:active {
+.app-menu__social-link:active {
   opacity: 0.7;
 }
 
@@ -848,7 +848,7 @@ main {
 /* Media queries */
 
 @media screen and (max-width: 500px) {
-  .garment-info-panel {
+  .garment-panel {
     margin: 15px;
   }
 
@@ -856,7 +856,7 @@ main {
     font-size: 15px;
   }
 
-  .info-menu__close-btn,
+  .app-menu__close-btn,
   .garment-menu__close-btn  {
     top: 30px;
     right: 20px;
@@ -864,11 +864,11 @@ main {
 }
 
 @media screen and (max-height: 800px) and (min-width: 600px) {
-  .garment-info-panel {
+  .garment-panel {
     max-height: 85vh;
   }
 
-  .garment-info-panel.active {
+  .garment-panel.active {
     display: grid;
     grid-template-columns: 1.25fr 1fr;
     gap: 30px;

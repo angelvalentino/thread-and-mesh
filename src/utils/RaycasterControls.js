@@ -17,7 +17,7 @@ export default class RaycasterControls {
     this.onMouseLeave = null;
     this.onClick = null;
 
-    this.uiBlocker = document.querySelector('.garment-info-panel');
+    this.uiBlocker = document.querySelector('.garment-panel');
     this.isOverUI = false;
 
     this._onMouseMove = this.#onMouseMove.bind(this);

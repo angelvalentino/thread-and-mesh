@@ -1,11 +1,11 @@
 export default class AppMenu {
   constructor(menuHandler) {
-    this.menuKey = 'infoModal';
+    this.menuKey = 'appMenu';
 
     menuHandler.update({
       toggleBtnId: 'toggle-menu-btn',
-      menuLmId: 'info-menu',
-      closeBtnId: 'info-menu__close-btn',
+      menuLmId: 'app-menu',
+      closeBtnId: 'app-menu__close-btn',
       menuKey: this.menuKey
     });
   }

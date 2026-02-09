@@ -12,11 +12,11 @@ export default class GarmentPanel {
     this.garmentData = garmentData;
 
     this.lms = {
-      panel: document.getElementById('garment-info-panel'),
-      garmentTitle: document.getElementById('garment-info-panel__title'),
-      garmentDescription: document.getElementById('garment-info-panel__description'),
-      closeBtn: document.getElementById('garment-info-panel__close-btn'),
-      viewMoreBtn: document.getElementById('garment-info-panel__view-more-btn')
+      panel: document.getElementById('garment-panel'),
+      garmentTitle: document.getElementById('garment-panel__title'),
+      garmentDescription: document.getElementById('garment-panel__description'),
+      closeBtn: document.getElementById('garment-panel__close-btn'),
+      viewMoreBtn: document.getElementById('garment-panel__view-more-btn')
     }
 
     this.open(garmentData[garmentKey], garmentKey, focusOnActiveGarment);

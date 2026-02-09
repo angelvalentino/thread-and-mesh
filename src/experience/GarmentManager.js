@@ -73,7 +73,7 @@ export default class GarmentManager {
       btn.innerText = 'See details about ' + garmentData[mesh.userData.garmentKey].title;
       btn.classList.add('visually-hidden');
       btn.setAttribute('aria-expanded', 'false'); // initially closed
-      btn.setAttribute('aria-controls', 'garment-info-panel');
+      btn.setAttribute('aria-controls', 'garment-panel');
 
       // Add button 
       this.focusableBtns.push(btn);

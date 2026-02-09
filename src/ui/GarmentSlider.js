@@ -42,7 +42,7 @@ export default class GarmentSlider {
       sliderControls: this.root.querySelector('.garment-slider__controls'),
       controls: [...this.root.querySelectorAll('.garment-slider__control-btn')],
       garmentTitle: this.root.querySelector('.garment-slider__title'),
-      garmentPanel: document.getElementById('garment-info-panel')
+      garmentPanel: document.getElementById('garment-panel')
     };
 
     this.eventHandler = {};
@@ -199,7 +199,7 @@ export default class GarmentSlider {
           <button
             role="tab"
             aria-selected="${i === this.garmentIndex}"
-            aria-controls="garment-info-panel"
+            aria-controls="garment-panel"
             aria-label="Select ${this.kebabToSpaces(title)} (garment ${i + 1} of ${this.garmentsTitles.length})"
             data-index="${i}"
             data-name="${title}"
@@ -225,7 +225,7 @@ export default class GarmentSlider {
       <div role="region" aria-roledescription="carousel" aria-label="Garment carousel selection" id="garment-slider" class="garment-slider"> 
         <button 
           aria-label="Go back to previous garment" 
-          aria-controls="garment-info-panel"
+          aria-controls="garment-panel"
           class="garment-slider__prev-btn"
         >
           <svg class="garment-slider__prev-btn-svg" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -238,7 +238,7 @@ export default class GarmentSlider {
         <h2 id="garment-title" class="garment-slider__title">${this.kebabToSpaces(this.garmentKey)}</h2>
         <button 
           aria-label="Sew next garment" 
-          aria-controls="garment-info-panel"
+          aria-controls="garment-panel"
           class="garment-slider__next-btn"
         >
           <svg class="garment-slider__next-btn-svg" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
