@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import garmentData from "../data/garmentData.js";
-import GarmentInfoPanel from "../ui/GarmentInfoPanel.js";
+import GarmentPanel from "../ui/GarmentPanel.js";
 import GarmentRotationHandler from './GarmentRotationHandler.js';
 
 export default class GarmentManager {
@@ -14,7 +14,7 @@ export default class GarmentManager {
     this.modalHandler = modalHandler;
     this.cloneManager = null;
     this.garmentActionHub = null;
-    this.garmentInfoPanel = null;
+    this.garmentPanel = null;
     this.garmentRotationHandler = null;
 
     this.currentActiveGarment = null;
@@ -187,7 +187,7 @@ export default class GarmentManager {
     this.cloneManager.showHiddenGarments(this.renderer.freezeShadows.bind(this.renderer));
    
     // Show garment info panel and return camera to previous position
-    this.garmentInfoPanel = new GarmentInfoPanel(garmentData, this.currentActiveGarment.userData.garmentKey, this, this.modalHandler, false);
+    this.garmentPanel = new GarmentPanel(garmentData, this.currentActiveGarment.userData.garmentKey, this, this.modalHandler, false);
     this.camera.moveBack();
   }
 
@@ -203,7 +203,7 @@ export default class GarmentManager {
     this.focusOnActiveGarment(this.cloneManager.getActiveGarmentClone(), true, 17);
 
     // Close garment info panel and add rotation controls
-    this.garmentInfoPanel.close({ resetPanel: false, deleteActiveGarmentRef: false });
+    this.garmentPanel.close({ resetPanel: false, deleteActiveGarmentRef: false });
     this.garmentRotationHandler = new GarmentRotationHandler(this.cloneManager.getActiveGarmentClone(), this.utils);
   }
 
@@ -251,7 +251,7 @@ export default class GarmentManager {
   }
 
   resetActiveGarment({ resetCamera = true, deleteActiveGarmentRef = true } = {}) {
-    this.garmentInfoPanel = null;
+    this.garmentPanel = null;
     this.resetMeshStyle(this.currentActiveGarment);
     deleteActiveGarmentRef && (this.currentActiveGarment = null); //? This argument may not be needed 
     resetCamera && this.camera.moveBack();
@@ -271,14 +271,14 @@ export default class GarmentManager {
     this.currentActiveGarment = mesh; // Update active garment reference
 
     // If panel is open just update the UI
-    if (this.garmentInfoPanel) {
+    if (this.garmentPanel) {
       // Update garment information and set up a new active garment
-      this.garmentInfoPanel.updateGarment(garmentData[this.currentActiveGarment.userData.garmentKey], { updateSliderPos: true, garmentKey: this.currentActiveGarment.userData.garmentKey });
+      this.garmentPanel.updateGarment(garmentData[this.currentActiveGarment.userData.garmentKey], { updateSliderPos: true, garmentKey: this.currentActiveGarment.userData.garmentKey });
     }
     // Create a new UI instance
     else {
       // Update garment information and set up a new active garment
-      this.garmentInfoPanel = new GarmentInfoPanel(garmentData, this.currentActiveGarment.userData.garmentKey, this, this.modalHandler);
+      this.garmentPanel = new GarmentPanel(garmentData, this.currentActiveGarment.userData.garmentKey, this, this.modalHandler);
     }
 
     // Update aria-expanded on buttons

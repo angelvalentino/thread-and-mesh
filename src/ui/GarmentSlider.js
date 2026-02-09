@@ -42,7 +42,7 @@ export default class GarmentSlider {
       sliderControls: this.root.querySelector('.garment-slider__controls'),
       controls: [...this.root.querySelectorAll('.garment-slider__control-btn')],
       garmentTitle: this.root.querySelector('.garment-slider__title'),
-      garmentInfoPanel: document.getElementById('garment-info-panel')
+      garmentPanel: document.getElementById('garment-info-panel')
     };
 
     this.eventHandler = {};
@@ -74,8 +74,8 @@ export default class GarmentSlider {
     this.lms.sliderControls.removeEventListener('keydown', this.eventHandler.handleSliderKeyboard);
   }
 
-  setGarmentInfoPanelInstance(garmentInfoPanel) {
-    this.garmentInfoPanel = garmentInfoPanel;
+  setGarmentPanelInstance(garmentPanel) {
+    this.garmentPanel = garmentPanel;
   }
 
   handleSliderKeyboard(e) {
@@ -137,7 +137,7 @@ export default class GarmentSlider {
       this.garmentKey = garmentKey;
     }
 
-    this.garmentInfoPanel.updateGarment(this.garmentData[this.garmentKey], { garmentKey: this.garmentKey });
+    this.garmentPanel.updateGarment(this.garmentData[this.garmentKey], { garmentKey: this.garmentKey });
   }
 
   slide(direction) {
@@ -153,7 +153,7 @@ export default class GarmentSlider {
     this.garmentKey = this.garmentsTitles[this.garmentIndex];
 
     // Update the slider to reflect the new slide
-    this.garmentInfoPanel.updateGarment(this.garmentData[this.garmentKey], { garmentKey: this.garmentKey });
+    this.garmentPanel.updateGarment(this.garmentData[this.garmentKey], { garmentKey: this.garmentKey });
   }
 
   updateTitle() {
@@ -170,7 +170,7 @@ export default class GarmentSlider {
       control.tabIndex = isActive ? 0 : -1;
 
       if (isActive) {
-        this.lms.garmentInfoPanel.setAttribute('aria-labelledby', control.id);
+        this.lms.garmentPanel.setAttribute('aria-labelledby', control.id);
       }
     });
   }

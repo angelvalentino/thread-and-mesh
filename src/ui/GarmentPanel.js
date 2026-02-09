@@ -1,7 +1,7 @@
 import GarmentGallerySlider from "./GarmentGallerySlider.js";
 import GarmentSlider from "./GarmentSlider.js";
 
-export default class GarmentInfoPanel {
+export default class GarmentPanel {
   constructor(garmentData, garmentKey, garmentManager, modalHandler, focusOnActiveGarment = true) {
     this.garmentManager = garmentManager;
     this.modalHandler = modalHandler;
@@ -41,7 +41,7 @@ export default class GarmentInfoPanel {
       // If opened from the interactive view, we focus but don't restore it
       // to avoid overwriting the last stored key and element.
       this.modalHandler.addFocus({
-        modalKey: 'garmentInfoPanel', 
+        modalKey: 'garmentPanel', 
         firstFocusableLm: this.lms.closeBtn,
         auto: openFromInitialScene
       });
@@ -55,7 +55,7 @@ export default class GarmentInfoPanel {
 
       this.lms.viewMoreBtn.addEventListener('click', this.eventHandler.enterCloneView);
       this.modalHandler.addA11yEvents({
-        modalKey: 'garmentInfoPanel',
+        modalKey: 'garmentPanel',
         modalLm: this.lms.panel,
         closeLms: [ this.lms.closeBtn ],
         closeHandler: this.close.bind(this)
@@ -74,7 +74,7 @@ export default class GarmentInfoPanel {
 
     if (resetPanel) {
       this.garmentManager.resetActionHubReturnBtn(); // Reset the return button from action hub: set aria-expanded to false and remove it from the DOM
-      this.modalHandler.restoreFocus({ modalKey: 'garmentInfoPanel' }); // Restore focus to where it was before the panel and action hub interactions
+      this.modalHandler.restoreFocus({ modalKey: 'garmentPanel' }); // Restore focus to where it was before the panel and action hub interactions
     }
   }
 
@@ -93,7 +93,7 @@ export default class GarmentInfoPanel {
     // Update title
     if (newTitleSliderInstance) {
       this.garmentSlider = new GarmentSlider(this.garmentData, garmentKey);
-      this.garmentSlider.setGarmentInfoPanelInstance(this);
+      this.garmentSlider.setGarmentPanelInstance(this);
     } 
     else {
       if (updateSliderPos) {
@@ -124,7 +124,7 @@ export default class GarmentInfoPanel {
 
       this.lms.viewMoreBtn.removeEventListener('click', this.eventHandler.enterCloneView);
       this.modalHandler.removeA11yEvents({
-        modalKey: 'garmentInfoPanel',
+        modalKey: 'garmentPanel',
         modalLm: this.lms.panel,
         closeLms: [ this.lms.closeBtn ]
       });

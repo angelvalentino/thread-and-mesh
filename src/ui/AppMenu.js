@@ -1,4 +1,4 @@
-export default class AppInfoMenu {
+export default class AppMenu {
   constructor(menuHandler) {
     this.menuKey = 'infoModal';
 

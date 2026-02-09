@@ -11,7 +11,7 @@ import GarmentManager from '../experience/GarmentManager.js';
 import Utils from '../utils/Utils.js';
 import CloneManager from '../experience/CloneManager.js';
 import RoomGrid from '../experience/RoomGrid.js';
-import AppInfoMenu from '../ui/AppInfoMenu.js';
+import AppMenu from '../ui/AppMenu.js';
 import GarmentActionHub from '../ui/GarmentActionHub.js';
 import MenuHandler from '../ui/MenuHandler.js';
 
@@ -30,7 +30,7 @@ export default class App {
     const roomGrid = new RoomGrid(this.scene);
     const modalHandler = new ModalHandler();
     const menuHandler = new MenuHandler(modalHandler);
-    new AppInfoMenu(menuHandler);
+    new AppMenu(menuHandler);
 
     // Garment logic handler
     const garmentManager = new GarmentManager(this.scene, this.camera, this.renderer, utils, modalHandler);
