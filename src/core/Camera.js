@@ -66,6 +66,14 @@ export default class Camera {
     }
   }
 
+  blockActivationKeys(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      // temporarily block Enter and Space keys so keyboard users cannot trigger buttons while the camera is moving
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
+  };
+
   moveTo({ 
     targetPosition, 
     lookAt = null, 
@@ -73,7 +81,9 @@ export default class Camera {
     duration = this.animationDefaultTime,
     fov = null
   }) {
-    document.body.style.pointerEvents = 'none';
+    document.body.style.pointerEvents = 'none'; // disable pointer events
+    // Even if moveTo is called multiple times, the listener is not re-added because the parameters are the same
+    document.addEventListener('keydown', this.blockActivationKeys, true); // temporarily block Enter and Space keys
     this.raycasterControls.disable();
 
     if (saveHistory) {
@@ -94,7 +104,8 @@ export default class Camera {
       onComplete: () => {
         if (this.pointerControlsStatus) this.pointerControls.updateBasePosition();
         if (this.pointerControlsStatus) this.updatePointerState();
-        document.body.style.pointerEvents = 'auto';
+        document.body.style.pointerEvents = 'auto'; // re-enable pointer events
+        document.removeEventListener('keydown', this.blockActivationKeys, true); // restore enter and space key functionality
         this.raycasterControls.enable();
       }
     });
