@@ -807,6 +807,11 @@ main {
     transform: scale(1.1);
   }
 
+  .garment-slider__prev-btn:active,
+  .garment-slider__next-btn:active {
+    transform: scale(1);
+  }
+
   .garment-panel__view-more-btn:is(:hover, :focus-visible) {
     background-color: rgba(0, 0, 0, 0.72);
   }
