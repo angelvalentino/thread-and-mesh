@@ -13,6 +13,8 @@ export default class GarmentRotationHandler {
     this.onMove = this.onPointerMove.bind(this);
     this.onUp = this.onPointerUp.bind(this);
 
+    this.uiContainerLm = document.getElementById('ui-container'); 
+
     if (this.utils.isTouchBasedDevice()) {
       window.addEventListener("touchstart", this.onDown, { passive: false });
       window.addEventListener("touchmove", this.onMove, { passive: false });
@@ -20,6 +22,9 @@ export default class GarmentRotationHandler {
       window.addEventListener("touchcancel", this.onUp);
     } 
     else {
+      this.uiContainerLm.style.pointerEvents = 'auto';
+      this.uiContainerLm.style.cursor = 'grab';
+
       window.addEventListener("mousedown", this.onDown);
       window.addEventListener("mousemove", this.onMove);
       window.addEventListener("mouseup", this.onUp);
@@ -27,6 +32,10 @@ export default class GarmentRotationHandler {
   }
 
   dispose() {
+    // Reset cursor
+    this.uiContainerLm.style.cursor = 'default';
+    this.uiContainerLm.style.pointerEvents = '';
+
     // Remove desktop listeners
     window.removeEventListener("mousedown", this.onDown);
     window.removeEventListener("mousemove", this.onMove);
@@ -46,6 +55,9 @@ export default class GarmentRotationHandler {
     const currentX = this.utils.isTouchBasedDevice() ? e.touches[0].clientX : e.clientX;
     this.isDragging = true;
     this.lastX = currentX;
+
+    // Set cursor to grabbing when drag starts
+    if (!this.utils.isTouchBasedDevice()) this.uiContainerLm.style.cursor = 'grabbing';
   }
 
   onPointerMove(e) {
@@ -64,6 +76,9 @@ export default class GarmentRotationHandler {
 
   onPointerUp() {
     this.isDragging = false;
+
+    // Reset cursor back to grab (relaxed) when drag ends
+    if (!this.utils.isTouchBasedDevice()) this.uiContainerLm.style.cursor = 'grab';
   }
 
   update(delta) {

@@ -157,7 +157,7 @@ export default class RaycasterControls {
         if (this.onMouseEnter) this.onMouseEnter(hit);
 
         // Manage cursor
-        document.body.style.cursor = 'pointer';
+        if (!this.utils.isTouchBasedDevice()) document.body.style.cursor = 'pointer';
       }
     }
     // If no intersections are found but there was a previously hovered object
