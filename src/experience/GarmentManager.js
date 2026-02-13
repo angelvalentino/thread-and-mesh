@@ -255,6 +255,7 @@ export default class GarmentManager {
     this.resetMeshStyle(this.currentActiveGarment);
     deleteActiveGarmentRef && (this.currentActiveGarment = null); //? This argument may not be needed 
     resetCamera && this.camera.moveBack();
+    resetCamera && (document.body.style.cursor = ''); // makes sure that pointer cursor never lingers from garment hover
   }
 
   onClick(mesh) {
