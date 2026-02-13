@@ -135,6 +135,7 @@ export default class RaycasterControls {
         this.onMouseLeave(this.lastHovered);
       }
       this.lastHovered = null;
+      document.body.style.cursor = ''; // reset cursor
       return; // skip raycast this frame
     }
 
@@ -151,15 +152,19 @@ export default class RaycasterControls {
           this.onMouseLeave(this.lastHovered);
         }
 
-        // Trigger "mouse enter" logic for the new hit object
+        // Trigger mouse enter logic for the new hit object
         this.lastHovered = hit;
         if (this.onMouseEnter) this.onMouseEnter(hit);
+
+        // Manage cursor
+        document.body.style.cursor = 'pointer';
       }
     }
     // If no intersections are found but there was a previously hovered object
     else if (this.lastHovered) {
       if (this.onMouseLeave) this.onMouseLeave(this.lastHovered);
       this.lastHovered = null;
+      document.body.style.cursor = ''; // reset cursor
     }
   }
 }
