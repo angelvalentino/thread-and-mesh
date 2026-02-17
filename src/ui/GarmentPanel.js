@@ -27,6 +27,7 @@ export default class GarmentPanel {
   }
 
   open(garmentData, garmentKey, openFromInitialScene = true) {
+    document.body.style.cursor = ''; // makes sure that pointer cursor never lingers from garment hover
     this.eventHandler.closePanel = this.close.bind(this);
     this.eventHandler.enterCloneView = this.garmentManager.enterCloneView.bind(this.garmentManager);
 
