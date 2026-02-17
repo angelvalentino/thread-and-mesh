@@ -55,7 +55,7 @@ export default class MenuHandler {
     const menu = this.menus[menuKey];
     this.atelierExperienceInstance.resume();
 
-    const { toggleBtn, menuLm, closeBtn } = menu.lms;
+    const { toggleBtn, menuLm } = menu.lms;
 
     // close menu
     toggleBtn.classList.remove('visually-hidden');
@@ -68,11 +68,7 @@ export default class MenuHandler {
     }, 300);
 
     // remove events
-    this.modalHandler.removeA11yEvents({
-      modalKey: menuKey,
-      modalLm: menuLm,
-      closeLms: [ closeBtn ]
-    });
+    this.modalHandler.removeA11yEvents({ modalKey: menuKey });
   }
 
   open(menuKey) {

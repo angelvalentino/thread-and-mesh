@@ -64,10 +64,6 @@ export default class GarmentActionHub {
     this.garmentMenu = null;
 
     this.modalHandler.restoreFocus({ modalKey: 'cloneView' });
-
-    this.modalHandler.removeA11yEvents({
-      modalKey: 'cloneView',
-      closeLms: [ this.lms.returnBtn ]
-    });
+    this.modalHandler.removeA11yEvents({ modalKey: 'cloneView' });
   }
 }

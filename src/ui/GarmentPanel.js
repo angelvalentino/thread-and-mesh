@@ -123,11 +123,7 @@ export default class GarmentPanel {
       hidePanel && this.lms.panel.classList.remove('active');
 
       this.lms.viewMoreBtn.removeEventListener('click', this.eventHandler.enterCloneView);
-      this.modalHandler.removeA11yEvents({
-        modalKey: 'garmentPanel',
-        modalLm: this.lms.panel,
-        closeLms: [ this.lms.closeBtn ]
-      });
+      this.modalHandler.removeA11yEvents({ modalKey: 'garmentPanel' });
     }
   }
 }

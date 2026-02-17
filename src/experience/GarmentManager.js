@@ -192,18 +192,20 @@ export default class GarmentManager {
   }
 
   enterCloneView() {
-    // Unfroze shadows
-    this.renderer.unfreezeShadows();
-
-    // Display action hub
-    this.garmentActionHub.display(garmentData[this.currentActiveGarment.userData.garmentKey]);
-
     // Clone the active mannequin and focus camera
     this.cloneManager.cloneActiveGarment(this.getActiveGarment());
     this.focusOnActiveGarment(this.cloneManager.getActiveGarmentClone(), true, 17);
 
-    // Close garment info panel and add rotation controls
+    // Close garment panel and reset garment active style 
     this.garmentPanel.close({ resetPanel: false, deleteActiveGarmentRef: false });
+
+    // Unfreeze shadows
+    this.renderer.unfreezeShadows();
+
+    // Display action hub
+    this.garmentActionHub.display(garmentData[this.getActiveGarment().userData.garmentKey]);
+
+    // Add rotation controls
     this.garmentRotationHandler = new GarmentRotationHandler(this.cloneManager.getActiveGarmentClone(), this.utils);
   }
 
