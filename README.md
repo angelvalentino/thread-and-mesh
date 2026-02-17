@@ -44,7 +44,7 @@ The concept image that guided the design direction. The reference is from Modern
 - 📱 **Responsive Interface:** Fully responsive design that adapts seamlessly to desktops, tablets, mobiles, and smaller screens. 
 - 🌍 **WAI-ARIA compliant:** Built with inclusivity in mind, emphasizing keyboard navigation, semantic HTML, and A11y support to ensure the experience works for everyone.  
 - ⚡ **Optimized Performance:** Built with Vite for fast development and optimized production builds, with all 3D models created in Blender, exported as GLTF, and compressed with Draco for smooth runtime performance on both older and modern devices, including proper loading UI and feedback for users. 
-- 🗂️ **vanilla-aria-modals Implementation:** The [modal handler](https://www.npmjs.com/package/vanilla-aria-modals) utility ensures consistent ARIA behavior, keyboard navigation, modal stacking, and focus management across menus and scenes. 
+- 🗂️ **vanilla-aria-modals Implementation:** My [modal handler](https://www.npmjs.com/package/vanilla-aria-modals) utility ensures consistent ARIA behavior, keyboard navigation, modal stacking, and focus management across menus and scenes. 
 - 🏗️ **Object-Oriented Architecture:** Modular, object-oriented design separates the core system, garment logic, UI and experience layers. Ensuring maintainability and scalability.
 - 🧩 **Reusable Components:** Core logic, UI panels, and interaction modules are designed to be reusable across the application.  
 
@@ -103,6 +103,8 @@ git clone https://github.com/angelvalentino/thread-and-mesh.git
 While carefully polished, it remains a real time 3D environment, which introduces inherent limitations around accessibility, ARIA support, and performance despite best practices being applied. Optimized for desktop, with mobile support available but best experienced by tilting the device due to the panoramic nature of the scenes. Creating a separate mobile specific experience would undermine the goal of a single, unified atelier. 
 
 To optimize mobile performance, certain elements such as the wall lamp lighting were removed to maintain a smooth framerate of 30+ FPS on most devices. On smaller screens, these changes are barely noticeable, and the experience remains visually consistent. 
+
+Lastly, I chose a frozen shadows approach instead of baking, which would have increased file size and load times, ensuring a high-performance 3D application.
 
 <br>
 
