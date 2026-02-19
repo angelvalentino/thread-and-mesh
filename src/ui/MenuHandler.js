@@ -51,7 +51,7 @@ export default class MenuHandler {
     delete this.menus[menuKey];
   }
 
-  close(menuKey) {
+  close(e, menuKey) {
     const menu = this.menus[menuKey];
     this.atelierExperienceInstance.resume();
 
@@ -96,7 +96,7 @@ export default class MenuHandler {
       modalKey: menuKey,
       modalLm: menuLm,
       closeLms: [ closeBtn ],
-      closeHandler: this.close.bind(this, menuKey)
+      closeHandler: this.close.bind(this)
     });
   }
 }
