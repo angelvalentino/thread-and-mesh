@@ -197,7 +197,7 @@ export default class GarmentManager {
     this.focusOnActiveGarment(this.cloneManager.getActiveGarmentClone(), true, 17);
 
     // Close garment panel and reset garment active style 
-    this.garmentPanel.close({ resetPanel: false, deleteActiveGarmentRef: false });
+    this.garmentPanel.close({ resetPanel: false });
 
     // Unfreeze shadows
     this.renderer.unfreezeShadows();
@@ -252,12 +252,14 @@ export default class GarmentManager {
     group.userData.indicator.visible = true;
   }
 
-  resetActiveGarment({ resetCamera = true, deleteActiveGarmentRef = true } = {}) {
+  resetActiveGarment({ resetPanel = true } = {}) {
     this.garmentPanel = null;
     this.resetMeshStyle(this.currentActiveGarment);
-    deleteActiveGarmentRef && (this.currentActiveGarment = null); //? This argument may not be needed 
-    resetCamera && this.camera.moveBack();
-    resetCamera && (document.body.style.cursor = ''); // makes sure that pointer cursor never lingers from garment hover
+    if (resetPanel) {
+      this.currentActiveGarment = null;
+      this.camera.moveBack();
+      document.body.style.cursor = ''; // makes sure that pointer cursor never lingers from garment hover
+    }
   }
 
   onClick(mesh) {

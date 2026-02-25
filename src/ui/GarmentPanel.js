@@ -28,7 +28,6 @@ export default class GarmentPanel {
 
   open(garmentData, garmentKey, openFromInitialScene = true) {
     document.body.style.cursor = ''; // makes sure that pointer cursor never lingers from garment hover
-    this.eventHandler.closePanel = this.close.bind(this);
     this.eventHandler.enterCloneView = this.garmentManager.enterCloneView.bind(this.garmentManager);
 
     if (!this.lms.panel.classList.contains('active')) {
@@ -64,9 +63,9 @@ export default class GarmentPanel {
     }
   }
 
-  close({ resetPanel = true, deleteActiveGarmentRef = true } = {}) {
+  close({ resetPanel = true } = {}) {
     this.dispose({ hidePanel: true });
-    this.garmentManager.resetActiveGarment({ resetCamera: resetPanel, deleteActiveGarmentRef });
+    this.garmentManager.resetActiveGarment({ resetPanel: resetPanel });
     
     this.garmentManager.setFocusableBtnsCollapsed(); // reset the focusable buttons expaned status
     
